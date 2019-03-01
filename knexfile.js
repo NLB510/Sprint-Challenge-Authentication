@@ -5,6 +5,11 @@ module.exports = {
     client: 'sqlite3',
     connection: { filename: './database/auth.db3' }, // change this if you want a different name for the database
     useNullAsDefault: true, // used to avoid warning on console
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run('PRAGMA foreign_keys = ON', done);
+      }
+    },
     migrations: {
       directory: './database/migrations',
       tableName: 'dbmigrations',
